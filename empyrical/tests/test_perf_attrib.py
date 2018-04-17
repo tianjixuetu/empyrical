@@ -27,7 +27,7 @@ class PerfAttribTestCase(unittest.TestCase):
         )
 
         index = pd.MultiIndex.from_product(
-            [dts, tickers], names=['dt', 'ticker'])
+            [dts, tickers], names=['date', 'ticker'])
 
         positions = pd.Series([0.2857142857142857, 0.7142857142857143,
                                0.2857142857142857, 0.7142857142857143],
@@ -40,8 +40,9 @@ class PerfAttribTestCase(unittest.TestCase):
                   'risk_factor2': [0.25, 0.25, 0.25, 0.25]}
         )
 
+        expected_index = dts.set_names(['date'])
         expected_perf_attrib_output = pd.DataFrame(
-            index=dts,
+            index=expected_index,
             columns=['risk_factor1', 'risk_factor2', 'common_returns',
                      'specific_returns', 'total_returns'],
             data={'risk_factor1': [0.025, 0.025],
@@ -52,7 +53,7 @@ class PerfAttribTestCase(unittest.TestCase):
         )
 
         expected_exposures_portfolio = pd.DataFrame(
-            index=dts,
+            index=expected_index,
             columns=['risk_factor1', 'risk_factor2'],
             data={'risk_factor1': [0.25, 0.25],
                   'risk_factor2': [0.25, 0.25]}
@@ -78,7 +79,7 @@ class PerfAttribTestCase(unittest.TestCase):
                                                               factor_loadings)
 
         expected_perf_attrib_output = pd.DataFrame(
-            index=dts,
+            index=expected_index,
             columns=['risk_factor1', 'risk_factor2', 'common_returns',
                      'specific_returns', 'total_returns'],
             data={'risk_factor1': [0.0, 0.0],
@@ -89,7 +90,7 @@ class PerfAttribTestCase(unittest.TestCase):
         )
 
         expected_exposures_portfolio = pd.DataFrame(
-            index=dts,
+            index=expected_index,
             columns=['risk_factor1', 'risk_factor2'],
             data={'risk_factor1': [0.0, 0.0],
                   'risk_factor2': [0.0, 0.0]}
