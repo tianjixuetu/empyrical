@@ -353,7 +353,8 @@ class TestStats(BaseTestCase):
         (mixed_returns, 0.0, 1.7238613961706866),
         (mixed_returns, simple_benchmark, 0.34111411441060574),
         (positive_returns, 0.0, 52.915026221291804),
-        (negative_returns, 0.0, -24.406808633910085)
+        (negative_returns, 0.0, -24.406808633910085),
+        (flat_line_1, 0.0, np.inf),
     ])
     def test_sharpe_ratio(self, returns, risk_free, expected):
         assert_almost_equal(
