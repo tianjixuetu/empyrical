@@ -575,6 +575,7 @@ def calmar_ratio(returns, period=DAILY, annualization=None):
 
 def omega_ratio(returns, risk_free=0.0, required_return=0.0,
                 annualization=APPROX_BDAYS_PER_YEAR):
+    #计算omega_ratio,目标达成收益率的和除以收益率目标未达成的和
     """Determines the Omega ratio of a strategy.
 
     Parameters
@@ -631,6 +632,7 @@ def sharpe_ratio(returns,
                  period=DAILY,
                  annualization=None,
                  out=None):
+    #计算夏普率
     """
     Determines the Sharpe ratio of a strategy.
 
@@ -707,6 +709,7 @@ def sortino_ratio(returns,
                   annualization=None,
                   out=None,
                   _downside_risk=None):
+    #计算索提诺比率 
     """
     Determines the Sortino ratio of a strategy.
 
@@ -790,6 +793,7 @@ def downside_risk(returns,
                   period=DAILY,
                   annualization=None,
                   out=None):
+    #计算下行风险
     """
     Determines the downside deviation below a threshold
 
@@ -869,6 +873,7 @@ roll_downsize_risk = _create_unary_vectorized_roll_function(downside_risk)
 
 
 def excess_sharpe(returns, factor_returns, out=None):
+    #计算风险调整后的超额收益率
     """
     Determines the Excess Sharpe of a strategy.
 
@@ -921,6 +926,7 @@ roll_excess_sharpe = _create_binary_vectorized_roll_function(excess_sharpe)
 
 
 def _to_pandas(ob):
+    #转换成seriesh或者dataframe
     """Convert an array-like to a pandas object.
 
     Parameters
