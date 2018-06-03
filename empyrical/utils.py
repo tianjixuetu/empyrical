@@ -12,17 +12,28 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+########################################################################
+#引入时间模块datetime
 from datetime import datetime
+#引入装饰器函数，使用wraps能够更好地保存原始函数的信息
 from functools import wraps
+#从os模块中引入创建文件夹函数、环境映射函数
 from os import makedirs, environ
+#os模块路径的操作函数
 from os.path import expanduser, join, getmtime, isdir
+#记录错误符号
 import errno
+#警告模块，可以用于忽略警告信息或者提示但不中断运行
 import warnings
-
+#numpy模块
 import numpy as np
+#对矩阵进行切块函数
 from numpy.lib.stride_tricks import as_strided
+#pandas模块
 import pandas as pd
+#日期操作函数
 from pandas.tseries.offsets import BDay
+#获取数据模块，目前雅虎等接口已经不能使用
 from pandas_datareader import data as web
 
 try:
@@ -235,6 +246,7 @@ def _1_bday_ago():
 
 
 def get_fama_french():
+    #返回砝码五因子的变化率，可以返回数据成功
     """
     Retrieve Fama-French factors via pandas-datareader
     Returns
@@ -258,6 +270,7 @@ def get_fama_french():
 
 
 def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
+    #判断本地文件是否是最新的，如果不是最新的，就从新下载
     """
     Get returns from a cached file if the cache is recent enough,
     otherwise, try to retrieve via a provided update function and
@@ -325,6 +338,7 @@ def get_returns_cached(filepath, update_func, latest_dt, **kwargs):
 
 
 def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
+    #加载砝码五因子数据
     """
     Load risk factors Mkt-Rf, SMB, HML, Rf, and UMD.
     Data is stored in HDF5 file. If the data is more than 2
@@ -354,6 +368,7 @@ def load_portfolio_risk_factors(filepath_prefix=None, start=None, end=None):
 
 
 def get_treasury_yield(start=None, end=None, period='3MO'):
+    #获取债券的利息，国内没有翻墙的软件打不开相应的网站
     """
     Load treasury yields from FRED.
 
@@ -387,6 +402,7 @@ def get_treasury_yield(start=None, end=None, period='3MO'):
 
 
 def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
+    #从雅虎或者谷歌获取数据会报错，雅虎谷歌更改了接口
     """
     Wrapper for pandas.io.data.get_data_yahoo().
     Retrieves prices for symbol from yahoo and computes returns
@@ -425,6 +441,7 @@ def get_symbol_returns_from_yahoo(symbol, start=None, end=None):
 
 
 def default_returns_func(symbol, start=None, end=None):
+    #获取标普的收益率，从雅虎获取，应该已经不行了
     """
     Gets returns for a symbol.
     Queries Yahoo Finance. Attempts to cache SPY.
@@ -471,6 +488,7 @@ def default_returns_func(symbol, start=None, end=None):
 
 
 def rolling_window(array, length, mutable=False):
+    #返回被切割的array
     """
     Restride an array of shape
 

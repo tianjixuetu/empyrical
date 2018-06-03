@@ -12,16 +12,22 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+##########################################################################
+#从future模块引入division，在py2中进行真除法
 from __future__ import division
-
+#pandas模块
 import pandas as pd
+#numpy 模块   
 import numpy as np
+#scipy 模块
 from scipy import stats
+#six模块，py2\py3兼容包
 from six import iteritems
-
+#从utils引入平均值、标准差、最小、等函数
 from .utils import nanmean, nanstd, nanmin, up, down, roll, rolling_window
+#从周期中引入年化因子、每年近似日期数目
 from .periods import ANNUALIZATION_FACTORS, APPROX_BDAYS_PER_YEAR
+#从周期中引入日、周、约、年变量
 from .periods import DAILY, WEEKLY, MONTHLY, YEARLY
 
 
@@ -138,12 +144,15 @@ def _adjust_returns(returns, adjustment_factor):
     -------
     adjusted_returns : array-like
     """
+    #判断这个是不是多余的，直接返回returns - adjustment_factor不就可以了吗？
+    #是为了效率？
     if isinstance(adjustment_factor, (float, int)) and adjustment_factor == 0:
         return returns
     return returns - adjustment_factor
 
 
 def annualization_factor(period, annualization):
+    #可以自定义annualization，如果没有自定义，就从period.  py里面选
     """
     Return annualization factor from period entered or if a custom
     value is passed in.
@@ -279,6 +288,7 @@ def cum_returns_final(returns, starting_value=0):
 
 
 def aggregate_returns(returns, convert_to):
+    #把收益转换成周、月、年
     """
     Aggregates returns by week, month, or year.
 
@@ -313,6 +323,7 @@ def aggregate_returns(returns, convert_to):
 
 
 def max_drawdown(returns, out=None):
+    #计算最大回撤
     """
     Determines the maximum drawdown of a strategy.
 
@@ -369,6 +380,7 @@ roll_max_drawdown = _create_unary_vectorized_roll_function(max_drawdown)
 
 
 def annual_return(returns, period=DAILY, annualization=None):
+    #计算复合年化收益
     """
     Determines the mean annual growth rate of returns. This is equivilent
     to the compound annual growth rate.
@@ -452,6 +464,7 @@ def annual_volatility(returns,
                       alpha=2.0,
                       annualization=None,
                       out=None):
+    #计算收益率的标准差
     """
     Determines the annual volatility of a strategy.
 
@@ -509,6 +522,7 @@ roll_annual_volatility = _create_unary_vectorized_roll_function(
 
 
 def calmar_ratio(returns, period=DAILY, annualization=None):
+    #计算年化收益除以最大回撤的比率，mar
     """
     Determines the Calmar ratio, or drawdown ratio, of a strategy.
 
